@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses</title>
+	<meta charset="utf-8" />
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <script src="../Scripts/angular.js"></script>
+    <script src="../Scripts/angular-resource.js"></script>
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+    <script src="../CoursesApp/CoursesApp.js"></script>
+    <script src="../CoursesApp/CoursesController.js"></script>
+    <script src="../CoursesApp/CoursesFactory.js"></script>
+    <script src="/signalr/hubs"></script>
+</head>
+<body ng-app="CoursesApp" ng-controller="coursesController">
+    <div class="container">
+        <div class="row">
+            <h1>List of classes</h1>
+        </div>
+
+        <div class="row">
+            <div class="input-group input-group-lg navbar-search" role="search"> 
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-md" ng-model="search" placeholder="Search for a course">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="course in courseList | filter : search">
+                    <span>{{course.Name}} ({{course.AvailableSlots}} Available Slots) on the {{course.CourseDate | date:'dd.MM.yyyy'}}</span>                    
+                    <span class="pull-right">{{course.Price}}&euro;</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="row">
+            <form class="form-horizontal" id="newCourseForm">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <legend>Add Class</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Name</label>
+                        <div class="col-md-4">
+                            <input name="textinput" class="form-control input-md"
+                                   ng-model="vm.Name"
+                                   id="nameInput" type="text" placeholder="Course name">
+                            <span class="help-block">What is the course about?</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Price</label>
+                        <div class="col-md-4">
+                            <input name="textinput" class="form-control input-md"
+                                   ng-model="vm.Price"
+                                   id="priceInput" type="number" placeholder="100">
+                            <span class="help-block">Price for this course</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Available Slots</label>
+                        <div class="col-md-4">
+                            <input name="textinput" class="form-control input-md"
+                                   ng-model="vm.AvailableSlots"
+                                   id="slotsInput" type="number" placeholder="20">
+                            <span class="help-block">How many participants are allowed for this course?</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Course Date</label>
+                        <div class="col-md-4">
+                            <input name="textinput" class="form-control input-md" id="dateInput"
+                                   ng-model="vm.CourseDate"
+                                   type="date">
+                            <span class="help-block">When will the course take place?</span>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <button name="singlebutton" class="btn btn-primary"
+                                    ng-click="save(vm)"
+                                    id="singlebutton">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
